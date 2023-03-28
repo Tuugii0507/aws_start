@@ -1,0 +1,33 @@
+import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
+import { APIGatewayEvent, Handler } from "aws-lambda";
+import { db } from "../library/database";
+
+export const getPost: Handler<APIGatewayEvent> = async (event) => {
+  console.log("event:", event);
+  const id = event.pathParameters?.id;
+
+  try {
+    const { Item: item } = await db.getItem({
+      TableName: "posts",
+      Key: marshall({ id }),
+    });
+
+    if (!item) {
+      throw new Error("Post not found!");
+    }
+
+    return {
+      statusCode: 200,
+      body: JSON.stringify("hi"),
+    };
+  } catch (error) {
+    if (error instanceof Error) {
+      return {
+        statusCode: 500,
+        body: JSON.stringify({
+          message: error.message,
+        }),
+      };
+    }
+  }
+};

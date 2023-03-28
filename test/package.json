@@ -1,0 +1,25 @@
+{
+  "name": "test",
+  "version": "1.0.0",
+  "main": "handler.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^18.11.18",
+    "serverless-plugin-typescript": "^2.1.4",
+    "typescript": "^4.9.4"
+  },
+  "description": "",
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.259.0",
+    "@aws-sdk/client-sqs": "^3.267.0",
+    "@aws-sdk/util-dynamodb": "^3.256.0",
+    "@types/aws-lambda": "^8.10.110",
+    "amazon-cognito-identity-js": "^6.1.2",
+    "aws-lambda": "^1.0.7"
+  }
+}

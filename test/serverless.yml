@@ -1,0 +1,86 @@
+service: test
+
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: ap-southeast-1
+  iam:
+    role:
+      statements:
+        - Effect: "Allow"
+          Action:
+            - dynamodb:*
+            - sqs:*
+          Resource: "*"
+
+plugins:
+  - serverless-plugin-typescript
+
+functions:
+  createPost:
+    handler: src/lambda/createPost.createPost
+    environment:
+      QueueUrl:
+        Fn::GetAtt: [feedUpdateQueue, Url]
+    events:
+      - httpApi:
+          path: /createPost
+          method: post
+
+  # updateFeed:
+  #   handler:
+  #   events:
+  #     - sqs:
+  #         arn:
+  #           Fn::GetAtt: [createPostQueue, Arn]
+
+resources:
+  Resources:
+    usersTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: users
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 10
+          WriteCapacityUnits: 10
+
+    postsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: post
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 10
+          WriteCapacityUnits: 10
+
+    followTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: follow
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 10
+          WriteCapacityUnits: 10
+
+    feedUpdateQueue:
+      Type: AWS::SQS::Queue
+      Properties:
+        QueueName: feed-update-queue

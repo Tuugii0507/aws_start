@@ -7,29 +7,48 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 
 export const Carousel = ({ photos }: any) => {
   const [sequence, setSequence] = useState(0);
-  //   if (sequence > photos.length) {
-  //     setSequence(0);
-  //   }
-  console.log(sequence);
+  if (sequence >= photos.length) {
+    setSequence(0);
+  }
   return (
     <Stack>
       <Image width={614} height={614} src={photos[sequence]} alt={""} />
-      <Stack
-        borderRadius={22}
-        border="1px solid #ffffff"
-        bgcolor="#ffffff"
-        justifyContent="center"
-        alignItems="center"
-        width={22}
-        height={22}
-        position="absolute"
-        marginLeft={70}
-        marginTop={34}
-      >
-        <Button onClick={() => setSequence(sequence + 1)}>
-          <ChevronRightIcon color="inherit"    />
-        </Button>
-      </Stack>
+      {sequence >= 1 && (
+        <Stack
+          borderRadius={22}
+          border="1px solid #ffffff"
+          bgcolor="#ffffff"
+          justifyContent="center"
+          alignItems="center"
+          width={22}
+          height={22}
+          position="absolute"
+          marginLeft={3.5}
+          marginTop={34}
+        >
+          <Button onClick={() => setSequence(sequence - 1)}>
+            <ChevronLeftIcon color="inherit" />
+          </Button>
+        </Stack>
+      )}
+      {photos.length != 1 && (
+        <Stack
+          borderRadius={22}
+          border="1px solid #ffffff"
+          bgcolor="#ffffff"
+          justifyContent="center"
+          alignItems="center"
+          width={22}
+          height={22}
+          position="absolute"
+          marginLeft={70}
+          marginTop={34}
+        >
+          <Button onClick={() => setSequence(sequence + 1)}>
+            <ChevronRightIcon color="inherit" />
+          </Button>
+        </Stack>
+      )}
     </Stack>
   );
 };

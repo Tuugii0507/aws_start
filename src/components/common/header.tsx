@@ -1,6 +1,6 @@
 import Image from "next/image";
 import logo from "../../assets/image/logo.png";
-import { IconButton, Input, InputBase, Paper } from "@mui/material";
+import { Button, IconButton, Input, InputBase, Paper } from "@mui/material";
 import { Stack } from "@mui/system";
 import Grid from "@mui/material/Grid";
 import SearchIcon from "@mui/icons-material/Search";
@@ -10,6 +10,7 @@ import plusIcon from "../../assets/icon/plusIcon.svg";
 import findIcon from "../../assets/icon/findIcon.svg";
 import hearthIcon from "../../assets/icon/hearthIcon.svg";
 import randomPhoto from "../../assets/image/random_photo.png";
+import Router from "next/router";
 
 export const Header = () => {
   return (
@@ -28,14 +29,20 @@ export const Header = () => {
         alignItems="center"
         spacing={30}
       >
-        <Image src={logo} width={103} height={29} alt={""} />
+        <Image
+          src={logo}
+          width={103}
+          height={29}
+          alt={""}
+          onClick={() => Router.reload()}
+        />
         <Input
           disabled={false}
           placeholder="Search"
           startAdornment={<SearchIcon />}
         />
         <Stack direction="row" spacing={3}>
-          <Image src={homeIcon} alt={""} />
+          <Image src={homeIcon} alt={""} onClick={() => Router.push("/")} />
           <Image src={messengerIcon} alt={""} />
           <Image src={plusIcon} alt={""} />
           <Image src={findIcon} alt={""} />
@@ -49,7 +56,13 @@ export const Header = () => {
             alignItems="center"
             overflow="hidden"
           >
-            <Image width={22} height={22} src={randomPhoto} alt={""} />
+            <Image
+              width={22}
+              height={22}
+              src={randomPhoto}
+              alt={""}
+              onClick={() => Router.push("/profile")}
+            />
           </Stack>
         </Stack>
       </Stack>

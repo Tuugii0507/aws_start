@@ -3,6 +3,7 @@ import Stack from "@mui/material/Stack";
 import { Color } from "@/theme/color";
 import { Story } from "../core/story";
 import { RightButton } from "../core/right_button";
+import { LeftButton } from "../core/left_button";
 
 export const Storys = () => {
   const stories = [
